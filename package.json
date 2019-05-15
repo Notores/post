@@ -1,0 +1,9 @@
+{
+  "name": "@notores/post",
+  "main": "index.js",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "mongoose": "^5.4.11",
+    "@notores/core": "^0.2.0"
+  }
+}
