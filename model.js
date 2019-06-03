@@ -1,9 +1,7 @@
 const {stringToUrl} = require("./lib/stringExtend");
-const {Schema} = require('mongoose');
 const {MongoSchema} = require('@notores/core');
 
-const PostSchema = new Schema(
-    {
+const Post = new MongoSchema('Post', {
         title: {type: String, required: true, unique: true},
         url: {type: String, required: true, unique: true},
         content: {type: String, required: true},
@@ -14,7 +12,7 @@ const PostSchema = new Schema(
         page: {type: Boolean, required: true, default: false},
         // likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
         live: {type: Boolean, required: true, default: false},
-        history: [{type: Schema.Types.Mixed}],
+        history: [{type: MongoSchema.Types.Mixed}],
         allowComments: {type: Boolean, default: false},
         // comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
     },
@@ -24,7 +22,7 @@ const PostSchema = new Schema(
     }
 );
 
-PostSchema.pre('validate', function fixTitleUrl(next) {
+Post.pre('validate', function fixTitleUrl(next) {
     if (!this.url)
         this.url = stringToUrl(this.title);
 
@@ -32,8 +30,6 @@ PostSchema.pre('validate', function fixTitleUrl(next) {
 
     next();
 });
-
-const Post = new MongoSchema('Post', PostSchema);
 
 Post.updateWhitelist('get', [
     'title',
