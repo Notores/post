@@ -37,7 +37,7 @@ class PostRouter {
             if (!result)
                 return next('route');
 
-            res.locals.themePage = result.page ? 'page' : 'post';
+            res.locals.page = result.page ? 'page' : 'post';
             res.locals.setBody(result.page ? {page: result} : {post: result});
 
             return next();
